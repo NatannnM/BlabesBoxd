@@ -1,0 +1,7 @@
+{
+  "name": "BlabesBoxd",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
