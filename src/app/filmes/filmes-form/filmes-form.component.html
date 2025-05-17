@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cadastro de Filmes!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="filmesForm">
+    <ion-list>
+      <ion-item>
+        <ion-input formControlName="title" labelPlacement="floating" label= "Título:" type="text"></ion-input>
+        <p>
+          @if(hasError('title', 'required')){
+            O campo é obrigatório
+          }
+          @if(hasError('title', 'minlength')){
+            O campo deve ter no mínimo 3 caracteres
+          }
+          @if(hasError('title', 'maxlength')){
+            O campo deve ter no máximo 150 caracteres
+          }
+        </p>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="image" labelPlacement="floating" label= "Capa do Filme:" type="url"></ion-input>
+        <p>
+          @if(hasError('image','required')){
+            O campo é obrigatório
+          }
+          @if(hasError('image','invalidUrl')){
+            A capa deve ter uma URL válida
+          }
+        </p>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="launchDate" labelPlacement="floating" label= "Data de Lançamento" [maskito]="dateMask" [maskitoElement]="maskitoElement"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-select formControlName="genre" label="Gênero" label-placement="floating" multiple="true">
+          @for(genero of genre; track genre){
+            <ion-select-option [value]="genero">{{genero}}</ion-select-option>
+          }
+        </ion-select>
+      </ion-item>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button [disabled]="filmesForm.invalid" (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </form>
+</ion-content>
