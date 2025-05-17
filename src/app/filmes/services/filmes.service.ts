@@ -6,22 +6,22 @@ import { Filmes } from "../models/filmes.type";
 })
 export class FilmesService {
   
-  private filmesList: Filmes[] = [
-    {
-      id: 1,
-      title: '007 Cassino Royale',
-      image: 'https://m.media-amazon.com/images/I/61IZyZAdEZL._AC_UF894,1000_QL80_.jpg',
-      launchDate: new Date(2006, 11, 16),
-      genre: ['Ação', 'Mistério'], 
-    },
-    {
-      id: 2,
-      title: 'Blade Runner 2049',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ9coXypexaMz06TKPZZYZGUonO-u80i-zPQ&s',
-      launchDate: new Date(2017, 10, 5),
-      genre: ['Ficção Científica', 'Drama'],
-    }
-  ];
+    private filmesList: Filmes[] = [
+      {
+        id: 1,
+        title: '007 Cassino Royale',
+        image: 'https://m.media-amazon.com/images/I/61IZyZAdEZL._AC_UF894,1000_QL80_.jpg',
+        launchDate: new Date(2006, 11, 16),
+        genre: ['Ação', 'Mistério'], 
+      },
+      {
+        id: 2,
+        title: 'Blade Runner 2049',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZ9coXypexaMz06TKPZZYZGUonO-u80i-zPQ&s',
+        launchDate: new Date(2017, 10, 5),
+        genre: ['Ficção Científica', 'Drama'],
+      }
+    ];
 
   constructor() {
 

@@ -1,0 +1,63 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Cadastro de Diretor!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <form [formGroup]="diretorForm">
+    <ion-list>
+      <ion-item>
+        <ion-input formControlName="nome" labelPlacement="floating" label="Nome:" type="text"></ion-input>
+        <p>
+          @if(hasError('nome', 'required')){
+          O campo é obrigatório
+          }
+          @if(hasError('nome', 'minlength')){
+          O campo deve ter no mínimo 3 caracteres
+          }
+          @if(hasError('nome', 'maxlength')){
+          O campo deve ter no máximo 150 caracteres
+          }
+        </p>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="image" labelPlacement="floating" label="Foto:" type="url"></ion-input>
+        <p>
+          @if(hasError('image','required')){
+          O campo é obrigatório
+          }
+          @if(hasError('image','invalidUrl')){
+          A capa deve ter uma URL válida
+          }
+        </p>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="sobre" labelPlacement="floating" label="Sobre:" type="text"></ion-input>
+        <p>
+          @if(hasError('sobre', 'required')){
+          O campo é obrigatório
+          }
+          @if(hasError('sobre', 'minlength')){
+          O campo deve ter no mínimo 3 caracteres
+          }
+          @if(hasError('sobre', 'maxlength')){
+          O campo deve ter no máximo 150 caracteres
+          }
+        </p>
+      </ion-item>
+      <ion-item>
+        <ion-input formControlName="launchDate" labelPlacement="floating" label="Data de Nascimento"
+          [maskito]="dateMask" [maskitoElement]="maskitoElement"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+      <ion-fab-button [disabled]="diretorForm.invalid" (click)="save()">
+        <ion-icon name="checkmark"></ion-icon>
+      </ion-fab-button>
+    </ion-fab>
+  </form>
+</ion-content>
