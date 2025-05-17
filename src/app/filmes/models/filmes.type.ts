@@ -1,9 +1,9 @@
 export type Filmes = {
   id?: number,
-  image: string | null,
   title: string,
+  image: string | null,
   launchDate: Date | string,
-  genero: string,
-  diretor: string,
+  genre: string[],
+  //director: string,
   //estudio: Estudio[]
 }

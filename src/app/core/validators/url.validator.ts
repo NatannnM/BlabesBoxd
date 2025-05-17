@@ -4,9 +4,9 @@ export class ApplicationValidators {
 
   static urlValidator(control: AbstractControl): ValidationErrors | null {
     const value = control.value;
-    if(value.startsWith('http://') || value.startsWith('https://')) {
+    if(value.startsWith('http://') || value.startsWith('https://')){
       return null;
     }
-    return { invalidUrl: true }
+    return {invalidUrl: true}
   }
 }
