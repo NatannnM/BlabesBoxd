@@ -1,0 +1,50 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Estudios</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-card>
+  <ion-card-header>
+    <ion-card-title>Catálogo de Estudios</ion-card-title>
+    <ion-card-subtitle>Escolha o Estudio que deseja acessar</ion-card-subtitle>
+  </ion-card-header>
+  @for(estudios of estudiosList; track estudios.nome){
+  <ion-card-content>
+    <ion-list>
+      <ion-item>
+        <ion-thumbnail slot="start">
+          @if(estudios.image){
+          <img [alt]="estudios.nome" [src]="estudios.image" />
+          } @else {
+          <img alt="Sem Capa" src="https://placehold.co/400" />
+          }
+        </ion-thumbnail>
+        <ion-label>{{estudios.nome}}</ion-label>
+      </ion-item>
+      <ion-button size="small" [routerLink]="['edit', estudios.id]">
+        <ion-icon name="create" slot="start" ></ion-icon>
+        Editar
+      </ion-button>
+      <ion-button size="small" (click)="remove(estudios)">
+        <ion-icon name="trash" slot="end"></ion-icon>
+        Excluir
+      </ion-button>
+    </ion-list>
+    
+  </ion-card-content>
+  }
+  @empty{
+    <ion-item>Lista de estudios vazia, cadastre um novo estudio!</ion-item>
+  }
+</ion-card>
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['new']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+</ion-content>
