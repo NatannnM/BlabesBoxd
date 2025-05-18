@@ -9,7 +9,7 @@ export class AppComponent {
   public appPages = [
     { title: 'Home', url: '/folder/inbox', icon: 'home' },
     { title: 'Filmes', url: '/filmes', icon: 'images' },
-    { title: 'Estúdios', url: '/folder/favorites', icon: 'business' },
+    { title: 'Estúdios', url: '/estudios', icon: 'business' },
     { title: 'Diretor', url: '/folder/archived', icon: 'videocam' },
     { title: 'Review', url: '/folder/trash', icon: 'reader' },
     { title: 'Perfil', url: '/folder/spam', icon: 'person-circle' },
