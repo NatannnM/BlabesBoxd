@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
   password = '';
 
   loginForm: FormGroup = new FormGroup({
-    email: new FormControl('', Validators.required),
+    email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', Validators.required),
   });
 
@@ -38,6 +38,12 @@ export class LoginPage implements OnInit {
       }).then(alert => alert.present());
     }
   }
+
+  hasError(field: string, error: string) {
+    const formControl = this.loginForm.get(field);
+    return formControl?.touched && formControl?.errors?.[error]
+  }
+
 
   ngOnInit() {
   }

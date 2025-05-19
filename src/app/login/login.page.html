@@ -4,18 +4,47 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="loginForm">
-    <ion-list>
-      <ion-item>
-        <ion-input formControlName="email" labelPlacement="floating" label= "Email:" type="text"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-input formControlName="password" labelPlacement="floating" label= "Senha:" type="password"></ion-input>
-      </ion-item>
-    
-    <ion-button [disabled]="loginForm.invalid" (click)="logar()">Entrar</ion-button>
+<ion-content class="login-page">
+  <div class="login-container">
+     <ion-card>
+      <ion-card-header>
+        <ion-card-title class="ion-text-center">Faça seu Login!</ion-card-title>
+      </ion-card-header>
 
-    </ion-list>
-  </form>
+      <ion-card-content>
+        <form [formGroup]="loginForm">
+
+          <ion-item>
+            <ion-input formControlName="email" labelPlacement="floating" label= "Email:" type="email"></ion-input>
+            <p>
+            @if(hasError('email', 'required')){
+              O campo email é obrigatório.
+            }
+            @if(hasError('email', 'email')){
+              Digite um email válido.
+            }
+            </p>
+          </ion-item>
+
+          <ion-item>
+            <ion-input formControlName="password" labelPlacement="floating" label= "Senha:" type="password"></ion-input>
+            <p>
+            @if(hasError('password', 'required')){
+              O campo senha é obrigatório.
+            }
+            </p>
+          </ion-item>
+          <div class="envolver_botao">
+            <ion-button [disabled]="loginForm.invalid" (click)="logar()">Entrar</ion-button>
+          </div>
+          
+        </form>
+
+        <div class="ion-text-center ion-margin-top">
+          <a routerLink="/cadastro">Não tem uma conta? Crie uma agora!</a>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
 </ion-content>
