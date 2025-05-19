@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
+  showMenu = true;
+
   public appPages = [
     { title: 'Home', url: '/folder/inbox', icon: 'home' },
     { title: 'Filmes', url: '/filmes', icon: 'images' },
@@ -14,5 +17,13 @@ export class AppComponent {
     { title: 'Review', url: '/folder/trash', icon: 'reader' },
     { title: 'Perfil', url: '/folder/spam', icon: 'person-circle' },
   ];
-  constructor() {}
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.showMenu = !['/login'].includes(event.urlAfterRedirects);
+      }
+    });
+  }
 }
+
+
