@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/filmes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes do Filme</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editFilme()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteFilme()" color="danger">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="filme">
+    <ion-card-header>
+      <div class="movie-header">
+        <img [src]="filme.image" [alt]="filme.title" class="movie-poster">
+        <div class="movie-title-info">
+          <ion-card-title>{{ filme.title }}</ion-card-title>
+          <ion-card-subtitle>
+            Lançamento: {{ formatDate(filme.launchDate) }}
+          </ion-card-subtitle>
+        </div>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h2>Gêneros</h2>
+            <p>{{ filme.genre.join(', ') }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h2>Diretor</h2>
+            <p>{{ diretor?.nome }}</p>
+            <p class="info-text">{{ diretor?.sobre }}</p>
+            <p class="info-text">Nascimento: {{ formatDate(diretor?.launchDate || '') }}</p>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h2>Estúdio</h2>
+            <p>{{ estudio?.nome }}</p>
+            <p class="info-text">{{ estudio?.sobre }}</p>
+            <p class="info-text">Fundação: {{ formatDate(estudio?.launchDate || '') }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content> 

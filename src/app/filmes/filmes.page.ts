@@ -50,4 +50,10 @@ export class FilmesPage implements OnInit, ViewWillEnter, ViewDidEnter, ViewWill
     }).then(alert => alert.present());
   }
 
+  formatDate(date: Date | string): string {
+    if (date instanceof Date) {
+      return date.toLocaleDateString('pt-BR');
+    }
+    return date;
+  }
 }
