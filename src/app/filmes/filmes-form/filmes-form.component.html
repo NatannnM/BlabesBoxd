@@ -1,55 +1,77 @@
-<ion-header [translucent]="true">
-  <ion-toolbar color="secondary">
+<ion-header>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/filmes"></ion-back-button>
     </ion-buttons>
-    <ion-title>Cadastro de Filmes!</ion-title>
+    <ion-title>{{ filmesId ? 'Editar' : 'Novo' }} Filme</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="filmesForm">
-    <ion-list>
-      <ion-item>
-        <ion-input formControlName="title" labelPlacement="floating" label= "Título:" type="text"></ion-input>
-        <p>
-          @if(hasError('title', 'required')){
-            O campo é obrigatório
-          }
-          @if(hasError('title', 'minlength')){
-            O campo deve ter no mínimo 3 caracteres
-          }
-          @if(hasError('title', 'maxlength')){
-            O campo deve ter no máximo 150 caracteres
-          }
-        </p>
-      </ion-item>
-      <ion-item>
-        <ion-input formControlName="image" labelPlacement="floating" label= "Capa do Filme:" type="url"></ion-input>
-        <p>
-          @if(hasError('image','required')){
-            O campo é obrigatório
-          }
-          @if(hasError('image','invalidUrl')){
-            A capa deve ter uma URL válida
-          }
-        </p>
-      </ion-item>
-      <ion-item>
-        <ion-input formControlName="launchDate" labelPlacement="floating" label= "Data de Lançamento" [maskito]="dateMask" [maskitoElement]="maskitoElement"></ion-input>
-      </ion-item>
-      <ion-item>
-        <ion-select formControlName="genre" label="Gênero" label-placement="floating" multiple="true">
-          @for(genero of genre; track genre){
-            <ion-select-option [value]="genero">{{genero}}</ion-select-option>
-          }
-        </ion-select>
-      </ion-item>
-    </ion-list>
-    <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button [disabled]="filmesForm.invalid" (click)="save()">
-        <ion-icon name="checkmark"></ion-icon>
-      </ion-fab-button>
-    </ion-fab>
+<ion-content class="ion-padding">
+  <form [formGroup]="filmesForm" (ngSubmit)="save()">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Informações do Filme</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="stacked">Título</ion-label>
+          <ion-input formControlName="title" type="text"></ion-input>
+          <ion-note slot="error" *ngIf="hasError('title', 'required')">Título é obrigatório</ion-note>
+          <ion-note slot="error" *ngIf="hasError('title', 'minlength')">Título deve ter no mínimo 3 caracteres</ion-note>
+          <ion-note slot="error" *ngIf="hasError('title', 'maxlength')">Título deve ter no máximo 150 caracteres</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">URL da Imagem</ion-label>
+          <ion-input formControlName="image" type="url"></ion-input>
+          <ion-note slot="error" *ngIf="hasError('image', 'required')">URL da imagem é obrigatória</ion-note>
+          <ion-note slot="error" *ngIf="hasError('image', 'invalidUrl')">URL inválida</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Data de Lançamento</ion-label>
+          <ion-input formControlName="launchDate" [maskito]="dateMask"></ion-input>
+          <ion-note slot="error" *ngIf="hasError('launchDate', 'required')">Data de lançamento é obrigatória</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Diretor</ion-label>
+          <ion-select formControlName="director" interface="popover">
+            <ion-select-option *ngFor="let diretor of diretores" [value]="diretor">
+              {{ diretor.nome }}
+            </ion-select-option>
+          </ion-select>
+          <ion-note slot="error" *ngIf="hasError('director', 'required')">Diretor é obrigatório</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Estúdio</ion-label>
+          <ion-select formControlName="estudios" interface="popover">
+            <ion-select-option *ngFor="let estudio of estudios" [value]="estudio">
+              {{ estudio.nome }}
+            </ion-select-option>
+          </ion-select>
+          <ion-note slot="error" *ngIf="hasError('estudios', 'required')">Estúdio é obrigatório</ion-note>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Gêneros</ion-label>
+          <ion-select formControlName="genre" multiple="true" interface="popover">
+            <ion-select-option *ngFor="let g of genre" [value]="g">
+              {{ g }}
+            </ion-select-option>
+          </ion-select>
+          <ion-note slot="error" *ngIf="hasError('genre', 'required')">Pelo menos um gênero é obrigatório</ion-note>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+
+    <div class="ion-padding">
+      <ion-button expand="block" type="submit" [disabled]="filmesForm.invalid">
+        {{ filmesId ? 'Atualizar' : 'Salvar' }}
+      </ion-button>
+    </div>
   </form>
 </ion-content>

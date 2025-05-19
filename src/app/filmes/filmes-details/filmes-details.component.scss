@@ -1,0 +1,56 @@
+.movie-poster {
+  width: 80px;
+  height: 120px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.movie-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.movie-title-info {
+  flex: 1;
+}
+
+ion-card {
+  margin: 0;
+  border-radius: 0;
+}
+
+ion-list {
+  padding: 0;
+}
+
+ion-item {
+  --padding-start: 0;
+  --inner-padding-end: 0;
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+ion-label {
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--ion-color-primary);
+  }
+
+  p {
+    font-size: 1rem;
+    color: var(--ion-color-dark);
+    margin: 4px 0;
+  }
+}
+
+.info-text {
+  font-size: 0.9rem !important;
+  color: var(--ion-color-medium) !important;
+  font-style: italic;
+} 
