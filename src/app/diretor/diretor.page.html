@@ -6,40 +6,39 @@
 
 <ion-content [fullscreen]="true">
   <ion-card>
-  <ion-card-header>
-    <ion-card-title>Hall de Diretores</ion-card-title>
-    <ion-card-subtitle>Escolha o Diretor que deseja acessar</ion-card-subtitle>
-  </ion-card-header>
-  @for(diretor of diretorList; track diretor.nome){
-  <ion-card-content>
-    <ion-list>
-      <ion-item>
-        <ion-thumbnail slot="start">
-          @if(diretor.image){
-          <img [alt]="diretor.nome" [src]="diretor.image" />
-          } @else {
-          <img alt="Sem Capa" src="https://placehold.co/400" />
-          }
-        </ion-thumbnail>
-        <ion-label>{{diretor.nome}}</ion-label>
-      </ion-item>
-      <ion-button size="small" [routerLink]="['edit', diretor.id]">
-        <ion-icon name="create" slot="start" ></ion-icon>
-        Editar
-      </ion-button>
-      <ion-button size="small" (click)="remove(diretor)">
-        <ion-icon name="trash" slot="end"></ion-icon>
-        Excluir
-      </ion-button>
-    </ion-list>
-    
-  </ion-card-content>
-  }
-  @empty{
-    <ion-item>Hall de diretor vazia, cadastre um novo diretor!</ion-item>
-  }
-</ion-card>
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-card-header>
+      <ion-card-title>Hall de Diretores</ion-card-title>
+      <ion-card-subtitle>Escolha o Diretor que deseja acessar</ion-card-subtitle>
+    </ion-card-header>
+    @for(diretor of diretorList; track diretor.nome){
+    <ion-card-content>
+      <ion-list>
+        <ion-item [routerLink]="['/diretor', diretor.id]">
+          <ion-thumbnail slot="start">
+            @if(diretor.image){
+            <img [alt]="diretor.nome" [src]="diretor.image" />
+            } @else {
+            <img alt="Sem Capa" src="https://placehold.co/400" />
+            }
+          </ion-thumbnail>
+          <ion-label>{{diretor.nome}}</ion-label>
+        </ion-item>
+        <ion-button size="small" [routerLink]="['edit', diretor.id]">
+          <ion-icon name="create" slot="start" ></ion-icon>
+          Editar
+        </ion-button>
+        <ion-button size="small" (click)="remove(diretor)">
+          <ion-icon name="trash" slot="end"></ion-icon>
+          Excluir
+        </ion-button>
+      </ion-list>
+    </ion-card-content>
+    }
+    @empty{
+      <ion-item>Hall de diretor vazia, cadastre um novo diretor!</ion-item>
+    }
+  </ion-card>
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
     <ion-fab-button [routerLink]="['new']">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>

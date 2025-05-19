@@ -7,9 +7,10 @@ import { IonicModule } from '@ionic/angular';
 import { DiretorPageRoutingModule } from './diretor-routing.module';
 
 import { DiretorPage } from './diretor.page';
+import { DiretorFormComponent } from './diretor-form/diretor-form.component';
+import { DiretorDetailsComponent } from './diretor-details/diretor-details.component';
 
 import { MaskitoDirective } from '@maskito/angular';
-import { DiretorFormComponent } from './diretor-form/diretor-form.component';
 
 @NgModule({
   imports: [
@@ -21,6 +22,9 @@ import { DiretorFormComponent } from './diretor-form/diretor-form.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  declarations: [DiretorPage, DiretorFormComponent]
+  declarations: [
+    DiretorPage, 
+    DiretorFormComponent
+  ]
 })
 export class DiretorPageModule {}
