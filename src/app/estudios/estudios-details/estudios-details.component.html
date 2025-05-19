@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/estudios"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes do Estúdio</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="editEstudio()">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteEstudio()">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div *ngIf="estudio" class="ion-padding">
+    <ion-card>
+      <img [src]="estudio.image" [alt]="estudio.nome" class="estudio-logo">
+      <ion-card-header>
+        <ion-card-title>{{estudio.nome}}</ion-card-title>
+        <ion-card-subtitle>Fundado em {{formatDate(estudio.launchDate)}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <p>{{estudio.sobre}}</p>
+        <ion-list>
+          <ion-item>
+            <ion-label>
+              <h2>Dono</h2>
+              <p>{{estudio.dono}}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content> 

@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { EstudiosPage } from './estudios.page';
 import { EstudiosFormComponent } from './estudios-form/estudios-form.component';
+import { EstudiosDetailsComponent } from './estudios-details/estudios-details.component';
 
 const routes: Routes = [
   {
@@ -16,8 +17,11 @@ const routes: Routes = [
   {
     path: 'edit/:estudiosId',
     component: EstudiosFormComponent
+  },
+  {
+    path: 'details/:estudiosId',
+    component: EstudiosDetailsComponent
   }
-
 ];
 
 @NgModule({
