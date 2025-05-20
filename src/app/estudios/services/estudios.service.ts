@@ -10,18 +10,19 @@ export class EstudiosService {
    {
       id: 1,
       nome: 'Universal',
-      sobre: 'AAA',
+      sobre: 'A Universal Studios é um estúdio de cinema norte-americano de propriedade da Comcast e de sua subsidiária NBCUniversal.',
       launchDate: new Date(2006, 11, 16),
-      dono: 'SLa',
+      dono: 'Comcast',
       image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1wR_XeFh-hXmVk6MIj-kk6XTNy1eY7gYUUg&s', 
     },
-    {id: 2,
+    {
+      id: 2,
           nome: 'Columbia Pictures',
           image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsLMSwwATXbJoSPKgktusNNk1FbSrMqqYr6Q&s',
           sobre: 'Columbia Pictures Industries é uma produtora e distribuidora de filmes norte-americana e é um dos cinco maiores estúdios de cinema de Hollywood. ',
           launchDate: new Date(1924, 0, 10),
           dono: 'Sony'
-        }
+    }
   ]
   constructor() { }
   
