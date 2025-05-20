@@ -25,8 +25,8 @@ export class FilmesService {
         estudios: {
           id: 2,
           nome: 'Columbia Pictures',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Columbia_Pictures_logo.svg/1200px-Columbia_Pictures_logo.svg.png',
-          sobre: 'Estúdio de cinema americano fundado em 1924.',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsLMSwwATXbJoSPKgktusNNk1FbSrMqqYr6Q&s',
+          sobre: 'Columbia Pictures Industries é uma produtora e distribuidora de filmes norte-americana e é um dos cinco maiores estúdios de cinema de Hollywood. ',
           launchDate: new Date(1924, 0, 10),
           dono: 'Sony'
         }

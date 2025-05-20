@@ -7,19 +7,12 @@ import { Diretor } from '../models/diretor.type';
 export class DiretorService {
 private diretorList: Diretor[] = [
     {
-      id: 1,
-      nome: 'Lamine Yamal',
-      image: 'https://tmssl.akamaized.net//images/foto/galerie/lamine-yamal-fc-barcelona-2024-25-1745911357-166797.jpg',
-      launchDate: new Date(2007, 7, 13),
-      sobre: 'Diretor do filme, Messi na conta secundaria', 
-    },
-    {
-      id: 2,
-      nome: 'Vini Jr',
-      image: 'https://img.uefa.com/imgml/TP/players/1/2025/324x324/250121533.jpg',
-      launchDate: new Date(2000, 7, 12),
-      sobre: 'Diretor do filme, A Malvadeza do drible', 
-    }
+    id: 1,
+          nome: 'Martin Campbell',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Martin_Campbell_%28cropped%29.jpg/800px-Martin_Campbell_%28cropped%29.jpg',
+          sobre: 'Diretor neozelandês conhecido por dirigir filmes de ação como GoldenEye e Casino Royale.',
+          launchDate: new Date(1943, 9, 24)
+        },
   ];
   constructor() { }
    getById(diretorId: number){

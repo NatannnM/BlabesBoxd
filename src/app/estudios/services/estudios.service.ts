@@ -13,8 +13,15 @@ export class EstudiosService {
       sobre: 'AAA',
       launchDate: new Date(2006, 11, 16),
       dono: 'SLa',
-      image: 'https://m.media-amazon.com/images/I/61IZyZAdEZL._AC_UF894,1000_QL80_.jpg', 
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1wR_XeFh-hXmVk6MIj-kk6XTNy1eY7gYUUg&s', 
     },
+    {id: 2,
+          nome: 'Columbia Pictures',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsLMSwwATXbJoSPKgktusNNk1FbSrMqqYr6Q&s',
+          sobre: 'Columbia Pictures Industries é uma produtora e distribuidora de filmes norte-americana e é um dos cinco maiores estúdios de cinema de Hollywood. ',
+          launchDate: new Date(1924, 0, 10),
+          dono: 'Sony'
+        }
   ]
   constructor() { }
   

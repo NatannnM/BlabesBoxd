@@ -10,7 +10,6 @@ export class AppComponent {
   showMenu = true;
 
   public appPages = [
-    { title: 'Home', url: '/folder/inbox', icon: 'home' },
     { title: 'Filmes', url: '/filmes', icon: 'images' },
     { title: 'Estúdios', url: '/estudios', icon: 'business' },
     { title: 'Diretor', url: '/diretor', icon: 'videocam' },
