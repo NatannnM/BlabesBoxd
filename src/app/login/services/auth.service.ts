@@ -12,7 +12,10 @@ export class AuthService {
   usuariosList: Usuarios[] = [];
   
 
-  constructor(private storage: Storage, private usuariosService: UsuariosService) {
+  constructor(
+    private storage: Storage, 
+    private usuariosService: UsuariosService,
+  ) {
     this.storageReady = this.initStorage();
   }
 
@@ -26,7 +29,7 @@ export class AuthService {
     const usuarios = this.usuariosList.find(u => u.email === email && u.password === password);
     if (usuarios ) {
       await this.storageReady;
-      await this.storage.set('usuario_id', usuarios.id);
+      await this.storage.set('usuarioId', usuarios.id);
       return usuarios.id!;
     }
     return null;
@@ -34,11 +37,11 @@ export class AuthService {
 
   async getUsuarioId(): Promise<number | null> {
     await this.storageReady;
-    return this.storage.get('usuario_id');
+    return this.storage.get('usuarioId');
   }
 
   async logout(): Promise<void> {
     await this.storageReady;
-    await this.storage.remove('usuario_id');
+    await this.storage.remove('usuarioId');
   }
 }

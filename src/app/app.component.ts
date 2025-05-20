@@ -15,7 +15,7 @@ export class AppComponent {
     { title: 'Estúdios', url: '/estudios', icon: 'business' },
     { title: 'Diretor', url: '/diretor', icon: 'videocam' },
     { title: 'Review', url: '/folder/trash', icon: 'reader' },
-    { title: 'Perfil', url: '/folder/spam', icon: 'person-circle' },
+    { title: 'Perfil', url: '/usuarios', icon: 'person-circle' },
   ];
   constructor(private router: Router) {
     this.router.events.subscribe(event => {

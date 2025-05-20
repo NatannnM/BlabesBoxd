@@ -2,7 +2,7 @@ export type Usuarios = {
     id?: number,
     name: string,
     nickname: string,
-    photo: string | null,
+    photo: string,
     email: string,
     address: string,
     password: string,
