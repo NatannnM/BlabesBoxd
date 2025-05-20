@@ -9,5 +9,4 @@ export type Filmes = {
   genre: string[],
   director: Diretor,
   estudios: Estudios,
-  //estudio: Estudio[]
 }

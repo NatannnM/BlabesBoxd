@@ -10,25 +10,16 @@ import { AlertController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLea
   standalone: false
 })
 
-export class FilmesPage implements OnInit, ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave {
+export class FilmesPage implements OnInit, ViewWillEnter {
   
   filmesList: Filmes[] = [];
 
   constructor(
     private filmesService: FilmesService, private alertController: AlertController,
   ) {}
-  ionViewDidLeave(): void {
-    console.log('ionViewDidLeave');
-  }
-  ionViewWillLeave(): void {
-    console.log('ionViewWillLeave');
-  }
   ionViewWillEnter(): void {
     console.log('ionViewWillEnter');
     this.filmesList = this.filmesService.getList();
-  }
-  ionViewDidEnter(): void {
-    console.log('ionViewDidEnter');
   }
 
   ngOnInit() {}
