@@ -40,13 +40,14 @@
       </ion-item>
       <ion-item>
         <ion-input formControlName="photo" labelPlacement="floating" label= "Foto de perfil:" type="url"></ion-input>
-        <p>
-          @if(hasError('photo','required')){
-            O campo é obrigatório
-          }
-          @if(hasError('photo','invalidUrl')){
-            A capa deve ter uma URL válida
-          }
+          <p>
+            @if(hasError('photo','required')){
+              O campo é obrigatório
+            }
+            @if(hasError('photo','invalidUrl')){
+              A foto deve ter uma URL válida
+            }
+          </p>
       </ion-item>
       <ion-item>
         <ion-input formControlName="email" labelPlacement="floating" label= "Email:" type="email"></ion-input>
