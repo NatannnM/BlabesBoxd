@@ -14,7 +14,7 @@
     <ion-card-content>
       <ion-list>
         <ion-item [routerLink]="['/diretor', diretor.id]">
-          <ion-thumbnail slot="start">
+          <ion-thumbnail slot="start" style="width: 80px; height: 120px;">
             @if(diretor.image){
             <img [alt]="diretor.nome" [src]="diretor.image" />
             } @else {

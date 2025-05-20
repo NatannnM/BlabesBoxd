@@ -10,11 +10,28 @@ export class EstudiosService {
    {
       id: 1,
       nome: 'Universal',
-      sobre: 'AAA',
-      launchDate: new Date(2006, 11, 16),
-      dono: 'SLa',
-      image: 'https://m.media-amazon.com/images/I/61IZyZAdEZL._AC_UF894,1000_QL80_.jpg', 
+      sobre: 'A Universal Studios é um estúdio de cinema norte-americano de propriedade da Comcast e de sua subsidiária NBCUniversal',
+      launchDate: new Date(1912, 4, 30),
+      dono: 'Comcast',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMWUZi_GO8aKWqh1WQejP4VxsGy9Yn2cq_GA&s', 
     },
+    {
+      id: 2,
+      nome: 'Warner Bros.',
+      sobre: 'A Warner Bros. é uma das maiores e mais antigas empresas de produção cinematográfica e televisiva dos Estados Unidos, conhecida por franquias como Harry Potter e DC Comics.',
+      launchDate: new Date(1923, 3, 4),
+      dono: 'Warner Bros. Discovery',
+      image: 'https://images.seeklogo.com/logo-png/15/2/warner-bros-logo-png_seeklogo-151467.png', 
+    },
+    {
+      id: 3,
+      nome: 'Paramount Pictures',
+      sobre: 'A Paramount Pictures é um dos principais estúdios de cinema de Hollywood, responsável por clássicos e franquias como Missão Impossível, Star Trek e Transformers.',
+      launchDate: new Date(1912, 4, 8),
+      dono: 'Paramount Global',
+      image: 'https://static.poder360.com.br/2024/04/Paramount_Logo-848x477.jpg', 
+    }
+    
   ]
   constructor() { }
   

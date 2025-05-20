@@ -52,7 +52,30 @@ export class FilmesService {
           launchDate: new Date(1923, 3, 4),
           dono: 'Warner'
         }
+      },
+      {
+        id: 3,
+        title: 'The Matrix',
+        image: 'https://m.media-amazon.com/images/I/51EG732BV3L.jpg',
+        launchDate: new Date(1999, 2, 31),
+        genre: ['Ação', 'Ficção Científica'],
+        director: {
+          id: 5,
+          nome: 'Lana Wachowski',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Lana_Wachowski_Cannes_2012.jpg/800px-Lana_Wachowski_Cannes_2012.jpg',
+          sobre: 'Diretora e roteirista americana, conhecida pela trilogia Matrix.',
+          launchDate: new Date(1965, 5, 21)
+        },
+        estudios: {
+          id: 1,
+          nome: 'Warner Bros. Pictures',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/64/Warner_Bros_logo.svg/1200px-Warner_Bros_logo.svg.png',
+          sobre: 'Um dos maiores estúdios de cinema do mundo, fundado em 1923.',
+          launchDate: new Date(1923, 3, 4),
+          dono: 'Warner'
+        }
       }
+      
     ];
 
   constructor() {

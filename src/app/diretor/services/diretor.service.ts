@@ -9,7 +9,7 @@ private diretorList: Diretor[] = [
     {
       id: 1,
       nome: 'Lamine Yamal',
-      image: 'https://tmssl.akamaized.net//images/foto/galerie/lamine-yamal-fc-barcelona-2024-25-1745911357-166797.jpg',
+      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS90y9dI4EjHtbkDvvEXxnPtGStx4DAdCXXvQ&s',
       launchDate: new Date(2007, 7, 13),
       sobre: 'Diretor do filme, Messi na conta secundaria', 
     },

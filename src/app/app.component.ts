@@ -11,9 +11,9 @@ export class AppComponent {
 
   public appPages = [
     { title: 'Home', url: '/folder/inbox', icon: 'home' },
-    { title: 'Filmes', url: '/filmes', icon: 'images' },
+    { title: 'Filmes', url: '/filmes', icon: 'film' },
     { title: 'Estúdios', url: '/estudios', icon: 'business' },
-    { title: 'Diretor', url: '/diretor', icon: 'videocam' },
+    { title: 'Diretor', url: '/diretor', icon: 'person' },
     { title: 'Review', url: '/folder/trash', icon: 'reader' },
     { title: 'Perfil', url: '/folder/spam', icon: 'person-circle' },
   ];
