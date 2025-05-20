@@ -9,14 +9,25 @@ export class UsuariosService{
     private usuariosList: Usuarios[] = [
         {
             id: 1,
-            name: 'João',
-            nickname: 'Jão',
-            photo: '',
-            email: 'joao@gmail.com',
+            name: 'Manoel Gomes',
+            nickname: 'Caneta Azul',
+            photo: 'https://agoralaguna.com.br/wp-content/uploads/2024/01/manoel-gomes.jpg',
+            email: 'manoel@gmail.com',
             address: 'Rua Joaquim Nabuco',
-            password: '123456',
+            password: '12345678',
             phone: '48996658439',
             admin: true
+        },
+        {
+            id: 2,
+            name: 'Francisco',
+            nickname: 'Chico Moedas',
+            photo: 'https://www.alagoas24horas.com.br/wp-content/uploads/2025/01/Chico-Moedas.jpeg',
+            email: 'chico@gmail.com',
+            address: 'Rua Melvin Jones',
+            password: '87654321',
+            phone: '48995587421',
+            admin: false
         }
     ]
 
@@ -55,6 +66,8 @@ export class UsuariosService{
     
     remove(usuarios: Usuarios){
       this.usuariosList = this.usuariosList.filter(u => u.id !== usuarios.id);
-    }    
+    }  
+
+    
 
 }

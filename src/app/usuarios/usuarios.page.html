@@ -1,13 +1,67 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>usuarios</ion-title>
+    <ion-title>Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">usuarios</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" *ngIf="usuariosAtual">
+  <ion-card>
+    <ion-card-content>
+      <div class="profile-container">
+        @if(usuariosAtual.photo){
+          <img [alt]="usuariosAtual.name" [src]="usuariosAtual.photo" class="profile-photo"/>
+        } @else {
+          <img alt="Sem Capa" src="https://placehold.co/400"class="profile-photo"/>
+        }
+
+        <div class="profile-details">
+          <h2>{{ usuariosAtual.name }}</h2>
+          <p><strong>Nickname:</strong> {{ usuariosAtual.nickname }}</p>
+          <p><strong>Email:</strong> {{ usuariosAtual.email }}</p>
+          <p><strong>Endereço:</strong> {{ usuariosAtual.address }}</p>
+          <p><strong>Telefone:</strong> {{ usuariosAtual.phone }}</p>
+          <p><strong>Administrador:</strong> {{ usuariosAtual.admin ? 'Sim' : 'Não' }}</p>
+        </div>
+      </div>
+      <ion-button size="small" [routerLink]="['edit', usuariosAtual.id]">
+        <ion-icon name="create" slot="start" ></ion-icon>
+          Editar
+      </ion-button>
+      <ion-button size="small" (click)="deslogar()">
+        <ion-icon name="log-out" slot="end" ></ion-icon>
+          Deslogar
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list *ngIf="usuariosAtual.admin">
+    <ion-list-header>
+      <ion-label>Todos os perfis cadastrados:</ion-label>
+    </ion-list-header>
+    @for(usuarios of usuariosList; track usuarios.name){
+      <ion-item>
+        <ion-label>
+          <h2>{{ usuarios.name }}</h2>
+          <p>{{ usuarios.email }}</p>
+        </ion-label>
+      </ion-item>
+      @if(usuarios.id !== usuariosAtual.id){
+        <ion-button size="small" [routerLink]="['edit', usuarios.id]">
+          <ion-icon name="create" slot="start" ></ion-icon>
+          Editar
+        </ion-button>
+        
+        <ion-button size="small" (click)="remove(usuarios)">
+          <ion-icon name="trash" slot="end"></ion-icon>
+          Excluir
+        </ion-button>
+      }
+    }
+  </ion-list>
+   <ion-fab *ngIf="usuariosAtual.admin" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['new']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
 </ion-content>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Filmes } from './models/filmes.type';
 import { FilmesService } from './services/filmes.service';
-import { AlertController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
+import { AlertController, ViewWillEnter} from '@ionic/angular';
 
 @Component({
   selector: 'app-filmes',
@@ -18,7 +18,6 @@ export class FilmesPage implements OnInit, ViewWillEnter {
     private filmesService: FilmesService, private alertController: AlertController,
   ) {}
   ionViewWillEnter(): void {
-    console.log('ionViewWillEnter');
     this.filmesList = this.filmesService.getList();
   }
 
@@ -41,10 +40,5 @@ export class FilmesPage implements OnInit, ViewWillEnter {
     }).then(alert => alert.present());
   }
 
-  formatDate(date: Date | string): string {
-    if (date instanceof Date) {
-      return date.toLocaleDateString('pt-BR');
-    }
-    return date;
-  }
+  
 }

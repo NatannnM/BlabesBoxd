@@ -9,6 +9,7 @@ import { UsuariosPageRoutingModule } from './usuarios-routing.module';
 import { UsuariosPage } from './usuarios.page';
 import { MaskitoDirective } from '@maskito/angular';
 import { UsuariosFormNovoComponent } from './usuarios-form-novo/usuarios-form-novo.component';
+import { UsuariosFormComponent } from './usuarios-form/usuarios-form.component';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { UsuariosFormNovoComponent } from './usuarios-form-novo/usuarios-form-no
   ],
   declarations: [
     UsuariosPage,
+    UsuariosFormComponent,
     UsuariosFormNovoComponent
   ]
 })

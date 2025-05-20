@@ -9,6 +9,7 @@ import { DiretorService } from '../../diretor/services/diretor.service';
 import { Estudios } from '../../estudios/models/estudios.type';
 import { EstudiosService } from '../../estudios/services/estudios.service';
 import { Filmes } from '../models/filmes.type';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-filmes-form',
@@ -53,10 +54,9 @@ export class FilmesFormComponent implements OnInit {
     private diretorService: DiretorService,
     private estudiosService: EstudiosService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
-
-  ngOnInit() {
+    private activatedRoute: ActivatedRoute,
+    private alertController: AlertController
+  ) {
     this.loadDiretores();
     this.loadEstudios();
     this.filmesId = parseInt(this.activatedRoute.snapshot.params['filmesId']);
@@ -76,30 +76,30 @@ export class FilmesFormComponent implements OnInit {
           estudios: filme.estudios
         });
       }
-    }
-  }
+    }}
 
-  hasError(controlName: string, errorName: string): boolean {
-    return this.filmesForm.get(controlName)?.hasError(errorName) ?? false;
+  ngOnInit() { }
+
+  hasError(field: string, error: string) {
+    const formControl = this.filmesForm.get(field);
+    return formControl?.touched && formControl?.errors?.[error]
   }
 
   save() {
-    if (this.filmesForm.valid) {
-      const formValue = this.filmesForm.value;
-      const filme: Filmes = {
-        ...formValue,
-        launchDate: parseDateMask(formValue.launchDate)
-      };
-
-      if (this.filmesId) {
-        filme.id = this.filmesId;
-        this.filmesService.save(filme);
-      } else {
-        this.filmesService.save(filme);
-      }
-
-      this.router.navigate(['/filmes']);
+    let { value } = this.filmesForm;
+    if(value.launchDate){
+      value.launchDate = parseDateMask(value.launchDate)
     }
+    this.filmesService.save({
+      ...value,
+      id: this.filmesId
+    });
+    this.alertController.create({
+        header: 'Cadastro',
+        message: 'Cadastro do filme feito com sucesso! Clique em ok.',
+        buttons: ['OK'],
+      }).then(alert => alert.present());
+    this.router.navigate(['/filmes']);
   }
 
   private loadDiretores() {

@@ -26,7 +26,7 @@
           </ion-thumbnail>
           <ion-label>
             <h2>{{filmes.title}}</h2>
-            <p>{{formatDate(filmes.launchDate)}}</p>
+            <p> {{filmes.launchDate | date: 'dd/MM/yyyy' }}</p>
             <p>{{filmes.genre.join(', ')}}</p>
           </ion-label>
         </ion-item>

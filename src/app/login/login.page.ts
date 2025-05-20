@@ -22,7 +22,7 @@ export class LoginPage implements OnInit {
   constructor(
     private auth: AuthService,
     private router: Router,
-    private alertController: AlertController,
+    private alertController: AlertController
   ) { }
 
   async logar() {
