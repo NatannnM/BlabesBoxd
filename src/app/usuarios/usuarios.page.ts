@@ -3,7 +3,7 @@ import { UsuariosService } from './services/usuarios.service';
 import { Usuarios } from './models/usuarios.type';
 import { AuthService } from '../login/services/auth.service';
 import { Router } from '@angular/router';
-import { ViewWillEnter } from '@ionic/angular';
+import { AlertController, ViewWillEnter } from '@ionic/angular';
 
 @Component({
   selector: 'app-usuarios',
@@ -19,6 +19,7 @@ export class UsuariosPage implements OnInit, ViewWillEnter {
     private usuariosService: UsuariosService,
     private authService: AuthService,
     private router: Router,
+    private alertController: AlertController
   ) { 
   }
   async ionViewWillEnter(): Promise<void> {
@@ -36,6 +37,23 @@ export class UsuariosPage implements OnInit, ViewWillEnter {
       }
     }
   }
+
+  remove(usuarios: Usuarios) {
+      this.alertController.create({
+        header: 'Excluir Usuário',
+        message: `Deseja excluir o Usuário ${usuarios.name}?`,
+        buttons: [
+          {
+            text: 'Sim',
+            handler: () => {
+              this.usuariosService.remove(usuarios);
+              this.usuariosList = this.usuariosService.getList();
+            }
+          },
+          'Não'
+        ]
+      }).then(alert => alert.present());
+    }
 
   deslogar(){
     this.authService.logout().then(() => {

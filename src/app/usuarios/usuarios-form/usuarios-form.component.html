@@ -3,12 +3,12 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Crie sua conta!</ion-title>
+    <ion-title>{{ usuariosId ? 'Editar' : 'Novo' }} Usuário</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <form [formGroup]="usuariosFormNovo">
+<ion-content class="ion-padding">
+  <form [formGroup]="usuariosForm">
     <ion-list>
       <ion-item>
         <ion-input formControlName="name" labelPlacement="floating" label= "Nome:" type="text"></ion-input>
@@ -67,7 +67,7 @@
             O campo é obrigatório!
           }
           @if(hasError('address', 'maxlength')){
-            O campo deve ter no máximo 150 caracteres!
+            O campo deve ter no máximo 200 caracteres!
           }
         </p>
       </ion-item>
@@ -77,8 +77,8 @@
           @if(hasError('password', 'required')){
             O campo é obrigatório!
           }
-          @if(hasError('password', 'maxlength')){
-            O campo deve ter no máximo 150 caracteres!
+          @if(hasError('password', 'minlength')){
+            O campo é obrigatório!
           }
         </p>
       </ion-item>
@@ -86,9 +86,14 @@
         <ion-input formControlName="phone" labelPlacement="floating" label="Número" [maskito]="phoneMask"
           [maskitoElement]="maskitoElement" />
       </ion-item>
+      <ion-item>
+        <ion-label>É administrador? </ion-label>
+        <ion-checkbox formControlName="admin"></ion-checkbox>
+      </ion-item>
+
     </ion-list>
     <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-      <ion-fab-button [disabled]="usuariosFormNovo.invalid" (click)="save()">
+      <ion-fab-button [disabled]="usuariosForm.invalid" (click)="save()">
         <ion-icon name="checkmark"></ion-icon>
       </ion-fab-button>
     </ion-fab>

@@ -14,7 +14,7 @@ export class UsuariosService{
             photo: 'https://agoralaguna.com.br/wp-content/uploads/2024/01/manoel-gomes.jpg',
             email: 'manoel@gmail.com',
             address: 'Rua Joaquim Nabuco',
-            password: '123456',
+            password: '12345678',
             phone: '48996658439',
             admin: true
         },
@@ -25,7 +25,7 @@ export class UsuariosService{
             photo: 'https://www.alagoas24horas.com.br/wp-content/uploads/2025/01/Chico-Moedas.jpeg',
             email: 'chico@gmail.com',
             address: 'Rua Melvin Jones',
-            password: '654321',
+            password: '87654321',
             phone: '48995587421',
             admin: false
         }

@@ -23,7 +23,7 @@
           <p><strong>Administrador:</strong> {{ usuariosAtual.admin ? 'Sim' : 'Não' }}</p>
         </div>
       </div>
-      <ion-button size="small" [routerLink]="">
+      <ion-button size="small" [routerLink]="['edit', usuariosAtual.id]">
         <ion-icon name="create" slot="start" ></ion-icon>
           Editar
       </ion-button>
@@ -38,14 +38,30 @@
     <ion-list-header>
       <ion-label>Todos os perfis cadastrados:</ion-label>
     </ion-list-header>
-    @for(usuariosAtual of usuariosList; track usuariosAtual.name){
+    @for(usuarios of usuariosList; track usuarios.name){
       <ion-item>
         <ion-label>
-          <h2>{{ usuariosAtual.name }}</h2>
-          <p>{{ usuariosAtual.email }}</p>
+          <h2>{{ usuarios.name }}</h2>
+          <p>{{ usuarios.email }}</p>
         </ion-label>
       </ion-item>
+      @if(usuarios.id !== usuariosAtual.id){
+        <ion-button size="small" [routerLink]="['edit', usuarios.id]">
+          <ion-icon name="create" slot="start" ></ion-icon>
+          Editar
+        </ion-button>
+        
+        <ion-button size="small" (click)="remove(usuarios)">
+          <ion-icon name="trash" slot="end"></ion-icon>
+          Excluir
+        </ion-button>
+      }
     }
   </ion-list>
+   <ion-fab *ngIf="usuariosAtual.admin" vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [routerLink]="['new']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
 
 </ion-content>
