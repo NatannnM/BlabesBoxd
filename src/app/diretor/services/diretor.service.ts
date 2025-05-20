@@ -9,7 +9,7 @@ private diretorList: Diretor[] = [
     {
     id: 1,
           nome: 'Martin Campbell',
-          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Martin_Campbell_%28cropped%29.jpg/800px-Martin_Campbell_%28cropped%29.jpg',
+          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRicTNpipgxNiTqSepj5mwKUcowB2liGwQVYA&s',
           sobre: 'Diretor neozelandês conhecido por dirigir filmes de ação como GoldenEye e Casino Royale.',
           launchDate: new Date(1943, 9, 24)
         },

@@ -6,6 +6,16 @@ usuario
 email: chico@gmail.com
 senha: 87654321
 
+////////////////////////////////////
+Felipe
+Felipin
+https://cdn-icons-png.flaticon.com/512/3176/3176151.png
+felipe@gmail.com
+Rua Mario nº 2
+123456789
+(48) 99558-7436
+
+
 Denis Villeneuve
 
 https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSG6s_dEYCHenB5JUIaY_0SjJ8xrc9ijGXwAw&s  
