@@ -19,7 +19,7 @@ export class EstudiosFormComponent  implements OnInit {
 
   estudiosForm: FormGroup = new FormGroup({
     nome: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
-    sobre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
+    sobre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(300)]),
     launchDate: new FormControl('', Validators.required),
     dono: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
     image: new FormControl('', [Validators.required, ApplicationValidators.urlValidator])
