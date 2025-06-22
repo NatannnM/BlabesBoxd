@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Diretor } from './models/diretor.type';
-import { AlertController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
+import { AlertController, ToastController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { DiretorService } from './services/diretor.service';
 
 @Component({
@@ -9,28 +9,31 @@ import { DiretorService } from './services/diretor.service';
   styleUrls: ['./diretor.page.scss'],
   standalone: false
 })
-export class DiretorPage implements OnInit, ViewWillEnter, ViewDidEnter, ViewWillLeave, ViewDidLeave  {
+export class DiretorPage implements OnInit, ViewWillEnter  {
 
   diretorList: Diretor[] = []; 
-  constructor(private diretorService: DiretorService, private alertController: AlertController,
 
+  constructor(
+    private diretorService: DiretorService, 
+    private alertController: AlertController,
+    private toastController: ToastController
   ) { }
-ionViewDidLeave(): void {
-    console.log('ionViewDidLeave');
-  }
-  ionViewWillLeave(): void {
-    console.log('ionViewWillLeave');
-  }
+
   ionViewWillEnter(): void {
-    console.log('ionViewWillEnter');
-    this.diretorList = this.diretorService.getList();
-  }
-  ionViewDidEnter(): void {
-    console.log('ionViewDidEnter');
+    this.diretorService.getList().subscribe({
+      next: (response) => {
+        this.diretorList = response;
+        
+      },
+      error: (error) => {
+        alert('Erro ao carregar lista de diretores');
+        console.error(error);
+      }  
+    });
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
+
   remove(diretor: Diretor) {
     this.alertController.create({
       header: 'Excluir Diretor',
@@ -39,8 +42,21 @@ ionViewDidLeave(): void {
         {
           text: 'Sim',
           handler: () => {
-            this.diretorService.remove(diretor);
-            this.diretorList = this.diretorService.getList();
+            this.diretorService.remove(diretor).subscribe({
+              next: (response) => {
+                this.ionViewWillEnter();
+                this.toastController.create({
+                  message: `Diretor ${diretor.nome} excluído com sucesso!`,
+                  duration: 3000,
+                  color: 'secondary',
+                  keyboardClose: true,
+                }).then(toast => toast.present());
+              },
+              error: (error) => {
+                alert(`Erro ao excluir diretor ${diretor.nome} \n${error.error.message}`);
+                console.error(error);
+              }
+            });
           }
         },
         'Não'

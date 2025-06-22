@@ -4,6 +4,7 @@ import { ApplicationValidators } from 'src/app/core/validators/url.validator';
 import { EstudiosService } from '../services/estudios.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { dateMask, formatDateMask, maskitoElement, parseDateMask } from 'src/app/core/constants/mask.constants';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-estudios-form',
@@ -30,22 +31,36 @@ export class EstudiosFormComponent  implements OnInit {
     private estudiosService: EstudiosService, 
     private router: Router,
     private activatedRoute: ActivatedRoute, 
-  
+    private toastController: ToastController
   ) { 
-    const estudiosId = parseInt(this.activatedRoute.snapshot.params['estudiosId'])
+    const estudiosId = this.activatedRoute.snapshot.params['estudiosId'];
     if(estudiosId){
-      const estudios = this.estudiosService.getById(estudiosId);
-      if(estudios){
-        this.estudiosId = estudiosId;
-        if(estudios.launchDate instanceof Date) {
-          estudios.launchDate = formatDateMask(estudios.launchDate);
+      this.estudiosService.getById(estudiosId).subscribe({
+        next: (estudios) => {
+          if(estudios){
+            this.estudiosId =  estudiosId;
+            if(estudios.launchDate instanceof Date){
+              estudios.launchDate = formatDateMask(estudios.launchDate);
+            }
+            if(typeof estudios.launchDate === 'string'){
+              const parsed = parseDateMask(estudios.launchDate, 'yyyy/mm/dd');
+              if(parsed){
+                estudios.launchDate = formatDateMask(parsed);
+              }
+            }
+            this.estudiosForm.patchValue(estudios);
+          }
+        },
+        error: (error) => {
+          alert('Erro ao carregar o estúdio com a id ' + estudiosId);
+          console.error(error);
         }
-        this.estudiosForm.patchValue(estudios);
-      }
+      });
     }
   }
 
   ngOnInit() {}
+
   hasError(field: string, error: string){
     const formControl = this.estudiosForm.get(field);
     return formControl?.touched && formControl?.errors?.[error]
@@ -59,8 +74,29 @@ export class EstudiosFormComponent  implements OnInit {
     this.estudiosService.save({
       ...value,
       id: this.estudiosId
+    }).subscribe({
+      next:() => {
+        this.toastController.create({
+          message: 'Estúdio salvo com sucesso!',
+          duration: 3000,
+          color: 'success',
+          position: 'top'
+        }).then(toast => toast.present());
+        this.router.navigate(['/estudios']);
+      },
+      error: (error) => {
+        this.toastController.create({
+          message: error.error.message,
+          header: 'Erro ao salvar o estúdio ' + value.nome + '!',
+          color: 'danger',
+          position: 'top',
+          buttons: [
+            { text: 'X', role: 'cancel' }
+          ]
+          }).then(toast => toast.present())
+          console.error(error);
+      }
     });
-    this.router.navigate(['/estudios']);
   }
 
 }

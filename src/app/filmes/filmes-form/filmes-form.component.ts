@@ -9,7 +9,9 @@ import { DiretorService } from '../../diretor/services/diretor.service';
 import { Estudios } from '../../estudios/models/estudios.type';
 import { EstudiosService } from '../../estudios/services/estudios.service';
 import { Filmes } from '../models/filmes.type';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ToastController } from '@ionic/angular';
+import { Generos } from '../models/generos.type';
+import { GenerosService } from '../services/generos.service';
 
 @Component({
   selector: 'app-filmes-form',
@@ -20,31 +22,17 @@ import { AlertController } from '@ionic/angular';
 export class FilmesFormComponent implements OnInit {
   dateMask = dateMask;
   maskitoElement = maskitoElement;
+  generos: Generos[] = [];  
   diretores: Diretor[] = [];
   estudios: Estudios[] = [];
-
-  genre = [
-    'Ação',
-    'Aventura',
-    'Comédia',
-    'Drama',
-    'Ficção Científica',
-    'Guerra',
-    'Mistério',
-    'Musical',
-    'Policial',
-    'Romance',
-    'Suspense',
-    'Terror',
-  ];
 
   filmesForm: FormGroup = new FormGroup({
     title: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(150)]),
     image: new FormControl('', [Validators.required, ApplicationValidators.urlValidator]),
     launchDate: new FormControl('', Validators.required),
-    genre: new FormControl('', Validators.required),
     director: new FormControl('', Validators.required),
-    estudios: new FormControl('', Validators.required)
+    estudios: new FormControl('', Validators.required),
+    genre: new FormControl('', Validators.required),
   });
 
   filmesId!: number;
@@ -53,32 +41,83 @@ export class FilmesFormComponent implements OnInit {
     private filmesService: FilmesService,
     private diretorService: DiretorService,
     private estudiosService: EstudiosService,
+    private generosService: GenerosService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private toastController: ToastController
   ) {
-    this.loadDiretores();
-    this.loadEstudios();
-    this.filmesId = parseInt(this.activatedRoute.snapshot.params['filmesId']);
-    if (this.filmesId) {
-      const filme = this.filmesService.getById(this.filmesId);
-      if (filme) {
-        const launchDate = filme.launchDate instanceof Date ? 
-          formatDateMask(filme.launchDate) : 
-          filme.launchDate;
-          
-        this.filmesForm.patchValue({
-          title: filme.title,
-          image: filme.image,
-          launchDate: launchDate,
-          genre: filme.genre,
-          director: filme.director,
-          estudios: filme.estudios
-        });
-      }
-    }}
+    const filmesId = this.activatedRoute.snapshot.params['filmesId'];
+    if(filmesId){
+      this.filmesService.getById(filmesId).subscribe({
+        next: (filmes) => {
+          if(filmes){
+            this.filmesId =  filmesId;
+            if(filmes.launchDate instanceof Date){
+              filmes.launchDate = formatDateMask(filmes.launchDate);
+            }
+            if(typeof filmes.launchDate === 'string'){
+              const parsed = parseDateMask(filmes.launchDate, 'yyyy/mm/dd');
+              if(parsed){
+                filmes.launchDate = formatDateMask(parsed);
+              }
+            }
+            this.filmesForm.patchValue(filmes);
+          }
+        },
+        error: (error) => {
+          alert('Erro ao carregar o filme com a id ' + filmesId);
+          console.error(error);
+        }
+      });
+    }
+  }
 
-  ngOnInit() { }
+  ngOnInit() { 
+    this.generosService.getGeneros().subscribe({
+      next: (data) => {
+        console.log('generos: ', data);
+        this.generos = data;
+      },
+      error: (error) => {
+        alert('Erro ao carregar gênero.');
+        console.error(error)
+      },
+    });
+
+    this.diretorService.getList().subscribe({
+      next: (data) => {
+        this.diretores = data;
+      },
+      error: (error) => {
+        alert('Erro ao carregar diretor.');
+        console.error(error)
+      },
+    });
+
+    this.estudiosService.getList().subscribe({
+      next: (data) => {
+        this.estudios = data;
+      },
+      error: (error) => {
+        alert('Erro ao carregar estúdio.');
+        console.error(error)
+      },
+    });
+  }
+
+  compareWithGeneros(o1: Generos | null, o2: Generos | null): boolean{
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
+
+  compareWithDiretor(o1: Diretor | null, o2: Diretor | null): boolean{
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
+
+  compareWithEstudios(o1: Estudios | null, o2: Estudios | null): boolean{
+    return o1 && o2 ? o1.id === o2.id : o1 === o2;
+  }
+
 
   hasError(field: string, error: string) {
     const formControl = this.filmesForm.get(field);
@@ -93,20 +132,28 @@ export class FilmesFormComponent implements OnInit {
     this.filmesService.save({
       ...value,
       id: this.filmesId
+    }).subscribe({
+      next: () => {
+        this.toastController.create({
+          message: 'Filme salvo com sucesso!',
+          duration: 3000,
+          color: 'success',
+          position: 'top'
+        }).then(toast => toast.present());
+        this.router.navigate(['/filmes']);
+      },
+      error: (error) => {
+        this.toastController.create({
+          message: error.error.message,
+          header: 'Erro ao salvar o filme ' + value.title + '!',
+          color: 'danger',
+          position: 'top',
+          buttons: [
+            { text: 'X', role: 'cancel' }
+          ]
+        }).then(toast => toast.present())
+        console.error(error);
+      }
     });
-    this.alertController.create({
-        header: 'Cadastro',
-        message: 'Cadastro do filme feito com sucesso! Clique em ok.',
-        buttons: ['OK'],
-      }).then(alert => alert.present());
-    this.router.navigate(['/filmes']);
-  }
-
-  private loadDiretores() {
-    this.diretores = this.diretorService.getList();
-  }
-
-  private loadEstudios() {
-    this.estudios = this.estudiosService.getList();
   }
 }

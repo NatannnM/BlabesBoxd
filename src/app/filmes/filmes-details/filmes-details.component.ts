@@ -1,64 +1,82 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { AlertController, IonicModule, ToastController } from '@ionic/angular';
+import { ActivatedRoute, Router, RouterModule} from '@angular/router';
 import { Filmes } from '../models/filmes.type';
 import { FilmesService } from '../services/filmes.service';
 import { Diretor } from '../../diretor/models/diretor.type';
 import { DiretorService } from '../../diretor/services/diretor.service';
 import { Estudios } from '../../estudios/models/estudios.type';
 import { EstudiosService } from '../../estudios/services/estudios.service';
+import { GenerosService } from '../services/generos.service';
+import { Generos } from '../models/generos.type';
 
 @Component({
   selector: 'app-filmes-details',
   templateUrl: './filmes-details.component.html',
   styleUrls: ['./filmes-details.component.scss'],
   standalone: true,
-  imports: [CommonModule, IonicModule]
+  imports: [CommonModule, IonicModule, RouterModule]
 })
 export class FilmesDetailsComponent implements OnInit {
-  filme: Filmes | undefined;
-  diretor: Diretor | undefined;
-  estudio: Estudios | undefined;
+  filmes!: Filmes;
+  diretores: Diretor[] = [];
+  estudios: Estudios[] = [];
+  generos: Generos[] = [];
 
   constructor(
     private filmesService: FilmesService,
     private diretorService: DiretorService,
     private estudioService: EstudiosService,
+    private generoService: GenerosService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private alertController: AlertController,
+    private toastController: ToastController,
+    private activatedRoute: ActivatedRoute,
   ) {}
 
   ngOnInit() {
-    const filmeId = parseInt(this.activatedRoute.snapshot.params['filmesId']);
-    if (filmeId) {
-      this.filme = this.filmesService.getById(filmeId);
-      if (this.filme?.director) {
-        this.diretor = this.diretorService.getById(this.filme.director.id!);
-      }
-      if (this.filme?.estudios) {
-        this.estudio = this.estudioService.getById(this.filme.estudios.id!);
-      }
-    }
-  }
+    const filmeId = this.activatedRoute.snapshot.params['filmesId'];
+    this.filmesService.getById(filmeId).subscribe({
+      next: (response) => {//continuar mostrar diretores, estudios e generos
+        this.filmes = response;
+      },
+      error: (error) => {
+        alert('Erro ao carregar filme');
+        console.error(error);
+      }  
+    });
 
-  editFilme() {
-    if (this.filme?.id) {
-      this.router.navigate(['/filmes/edit', this.filme.id]);
-    }
   }
 
   deleteFilme() {
-    if (this.filme) {
-      this.filmesService.remove(this.filme);
-      this.router.navigate(['/filmes']);
-    }
+    this.alertController.create({
+      header: 'Excluir Filme',
+      message: `Deseja excluir o filme ${this.filmes.title}?`,
+      buttons: [
+        {
+          text: 'Sim',
+          handler: () => {
+            this.filmesService.remove(this.filmes).subscribe({
+                next: (response) => {
+                  this.router.navigate(['/filmes']);
+                  this.toastController.create({
+                    message: `Filme ${this.filmes.title} excluído com sucesso!`,
+                    duration: 3000,
+                    color: 'secondary',
+                    keyboardClose: true,
+                  }).then(toast => toast.present());
+                },
+                error: (error) => {
+                  alert(`Erro ao excluir filme ${this.filmes.title} \n${error.error.message}`);
+                  console.error(error);
+                }
+              });
+            }
+          },
+          'Não'
+        ]
+      }).then(alert => alert.present());
   }
 
-  formatDate(date: Date | string): string {
-    if (date instanceof Date) {
-      return date.toLocaleDateString('pt-BR');
-    }
-    return date;
-  }
 } 

@@ -15,52 +15,46 @@ import { FilmesService } from '../../filmes/services/filmes.service';
   imports: [CommonModule, IonicModule]
 })
 export class DiretorDetailsComponent implements OnInit {
-  diretor: Diretor | undefined;
+  diretor!: Diretor;
   filmesDirigidos: Filmes[] = [];
 
   constructor(
     private diretorService: DiretorService,
     private filmesService: FilmesService,
-    private router: Router,
     private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
-    const diretorId = parseInt(this.activatedRoute.snapshot.params['diretorId']);
-    if (diretorId) {
-      this.diretor = this.diretorService.getById(diretorId);
-      this.carregarFilmesDirigidos(diretorId);
-    }
+    const diretorId = this.activatedRoute.snapshot.params['diretorId'];
+    this.diretorService.getById(diretorId).subscribe({
+      next: (response) => {
+        this.diretor = response;
+      },
+      error: (error) => {
+        alert('Erro ao carregar diretor');
+        console.error(error);
+      }  
+    });
+    
   }
 
-  private carregarFilmesDirigidos(diretorId: number) {
+  /*private carregarFilmesDirigidos(diretorId: number) {
     const todosFilmes = this.filmesService.getList();
     this.filmesDirigidos = todosFilmes.filter(filme => 
       filme.director?.id === diretorId
     );
-  }
+  }*/
 
   editDiretor() {
-    if (this.diretor?.id) {
-      this.router.navigate(['/diretor/edit', this.diretor.id]);
-    }
+    return this.diretorService.save(this.diretor);
   }
 
   deleteDiretor() {
-    if (this.diretor) {
-      this.diretorService.remove(this.diretor);
-      this.router.navigate(['/diretor']);
-    }
+    return this.diretorService.remove(this.diretor);
   }
 
-  formatDate(date: Date | string): string {
-    if (date instanceof Date) {
-      return date.toLocaleDateString('pt-BR');
-    }
-    return date;
-  }
 
-  verFilme(filmeId: number) {
+  /*verFilme(filmeId: number) {
     this.router.navigate(['/filmes', filmeId]);
-  }
+  }*/
 } 

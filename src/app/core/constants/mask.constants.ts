@@ -1,12 +1,12 @@
 import { MaskitoElementPredicate, MaskitoOptions, maskitoTransform } from "@maskito/core";
-import { maskitoDateOptionsGenerator, maskitoParseDate, maskitoStringifyDate } from "@maskito/kit";
+import { MaskitoDateMode, maskitoDateOptionsGenerator, maskitoParseDate, maskitoStringifyDate } from "@maskito/kit";
 
 const dateMask = maskitoDateOptionsGenerator({ mode: 'dd/mm/yyyy', separator: '/'});
 const maskitoElement: MaskitoElementPredicate = async(el) => 
     (el as HTMLIonInputElement).getInputElement();
 
-const parseDateMask = (date: string) => {
-    return maskitoParseDate(date, {mode: 'dd/mm/yyyy'})
+const parseDateMask = (date: string, mode: MaskitoDateMode = 'dd/mm/yyyy') => {
+    return maskitoParseDate(date, { mode })
 };
 
 const formatDateMask = (date: Date) => {

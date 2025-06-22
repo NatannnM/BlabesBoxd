@@ -1,8 +1,10 @@
+import { Filmes } from "src/app/filmes/models/filmes.type"
+
 export type Diretor = {
-  id?: number,
+  id?: string,
   nome: string,
   image: string | null,
   sobre: string,
-  launchDate: Date | string,
-  //filmes: filmes[]?,
+  birthDate: Date | string,
+  filmes: Filmes[]
 }
