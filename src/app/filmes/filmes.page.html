@@ -27,7 +27,10 @@
           <ion-label>
             <h2>{{filmes.title}}</h2>
             <p> {{filmes.launchDate | date: 'dd/MM/yyyy' }}</p>
-            <p>{{filmes.genre.join(', ')}}</p>
+            @for(generos of filmes.genre; track generos) {
+              <p>{{generos.nome}}</p>
+            }
+            
           </ion-label>
         </ion-item>
         <ion-button size="small" [routerLink]="['edit', filmes.id]">

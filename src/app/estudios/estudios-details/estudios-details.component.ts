@@ -13,7 +13,7 @@ import { EstudiosService } from '../services/estudios.service';
   imports: [CommonModule, IonicModule]
 })
 export class EstudiosDetailsComponent implements OnInit {
-  estudio: Estudios | undefined;
+  estudios!: Estudios;
 
   constructor(
     private estudiosService: EstudiosService,
@@ -22,29 +22,23 @@ export class EstudiosDetailsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    const estudioId = parseInt(this.activatedRoute.snapshot.params['estudiosId']);
-    if (estudioId) {
-      this.estudio = this.estudiosService.getById(estudioId);
-    }
+    const estudiosId = this.activatedRoute.snapshot.params['estudiosId'];
+    this.estudiosService.getById(estudiosId).subscribe({
+      next: (response) => {
+        this.estudios = response;
+      },
+      error: (error) => {
+        alert('Erro ao carregar estúdio');
+        console.error(error);
+      }  
+    });
   }
 
   editEstudio() {
-    if (this.estudio?.id) {
-      this.router.navigate(['/estudios/edit', this.estudio.id]);
-    }
+    return this.estudiosService.save(this.estudios);
   }
 
   deleteEstudio() {
-    if (this.estudio) {
-      this.estudiosService.remove(this.estudio);
-      this.router.navigate(['/estudios']);
-    }
-  }
-
-  formatDate(date: Date | string): string {
-    if (date instanceof Date) {
-      return date.toLocaleDateString('pt-BR');
-    }
-    return date;
+    return this.estudiosService.remove(this.estudios);
   }
 } 

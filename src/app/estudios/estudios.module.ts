@@ -9,6 +9,7 @@ import { EstudiosPageRoutingModule } from './estudios-routing.module';
 import { EstudiosPage } from './estudios.page';
 import { EstudiosFormComponent } from './estudios-form/estudios-form.component';
 import { EstudiosDetailsComponent } from './estudios-details/estudios-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { EstudiosDetailsComponent } from './estudios-details/estudios-details.co
     RouterModule,
     MaskitoDirective,
     EstudiosPageRoutingModule,
-    EstudiosDetailsComponent
+    EstudiosDetailsComponent,
+    HttpClientModule
   ],
   declarations: [
     EstudiosPage,

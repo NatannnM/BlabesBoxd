@@ -16,20 +16,20 @@
 </ion-header>
 
 <ion-content>
-  <div *ngIf="estudio" class="ion-padding">
+  <div *ngIf="estudios" class="ion-padding">
     <ion-card>
-      <img [src]="estudio.image" [alt]="estudio.nome" class="estudio-logo">
+      <img [src]="estudios.image" [alt]="estudios.nome" class="estudio-logo">
       <ion-card-header>
-        <ion-card-title>{{estudio.nome}}</ion-card-title>
-        <ion-card-subtitle>Fundado em {{formatDate(estudio.launchDate)}}</ion-card-subtitle>
+        <ion-card-title>{{estudios.nome}}</ion-card-title>
+        <ion-card-subtitle>Fundado em {{estudios.launchDate | date: 'dd/MM/yyyy' }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <p>{{estudio.sobre}}</p>
+        <p>{{estudios.sobre}}</p>
         <ion-list>
           <ion-item>
             <ion-label>
               <h2>Dono</h2>
-              <p>{{estudio.dono}}</p>
+              <p>{{estudios.dono}}</p>
             </ion-label>
           </ion-item>
         </ion-list>

@@ -1,68 +1,48 @@
 import { Injectable } from '@angular/core';
 import { Estudios } from '../models/estudios.type';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EstudiosService {
 
-  private estudiosList: Estudios[] = [
-   {
-      id: 1,
-      nome: 'Universal',
-      sobre: 'A Universal Studios é um estúdio de cinema norte-americano de propriedade da Comcast e de sua subsidiária NBCUniversal.',
-      launchDate: new Date(2006, 11, 16),
-      dono: 'Comcast',
-      image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1wR_XeFh-hXmVk6MIj-kk6XTNy1eY7gYUUg&s', 
-    },
-    {
-      id: 2,
-          nome: 'Columbia Pictures',
-          image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsLMSwwATXbJoSPKgktusNNk1FbSrMqqYr6Q&s',
-          sobre: 'Columbia Pictures Industries é uma produtora e distribuidora de filmes norte-americana e é um dos cinco maiores estúdios de cinema de Hollywood. ',
-          launchDate: new Date(1924, 0, 10),
-          dono: 'Sony'
-    }
-  ]
-  constructor() { }
+  private readonly API_URL = 'http://localhost:3000/estudios/';
+
+  constructor(private http: HttpClient) { }
   
-  getById(estudiosId: number){
-      return this.estudiosList.find(f => f.id === estudiosId);
-    }
+  getById(estudiosId: string){
+      return this.http.get<Estudios>(`${this.API_URL}${estudiosId}`);
+     }
+    
+  getList(){
+    return this.http.get<Estudios[]>(this.API_URL);
+  }
   
-    getList(){
-      return [...this.estudiosList];
-    }
+  private add(estudios: Estudios){
+    return this.http.post<Estudios>(this.API_URL, estudios);
+  }
   
-    private add(estudios: Estudios){
-      this.estudiosList = [...this.estudiosList, {
-        ...estudios,
-        id: this.getNextId()
-      }];
-    }
+  /*private getNextId(): number {
+    const MaxId = this.diretorList.reduce((id, diretor) => {
+      if(!!diretor.id && diretor?.id > id) {
+        id = diretor.id;
+      }
+      return id;
+    }, 0);
+    return MaxId + 1;
+  }*/
   
-    private getNextId(): number {
-      const MaxId = this.estudiosList.reduce((id, estudios) => {
-        if(!!estudios.id && estudios?.id > id) {
-          id = estudios.id;
-        }
-        return id;
-      }, 0);
-      return MaxId + 1;
-    }
+  private update(estudios: Estudios) {
+    return this.http.put<Estudios>(`${this.API_URL}${estudios.id}`, estudios);
+  }
   
-    private update(updatedEstudios: Estudios) {
-      this.estudiosList = this.estudiosList.map(f => {
-        return (f.id === updatedEstudios.id) ? updatedEstudios : f;
-      });
-    }
+  save(estudios: Estudios){
+    return estudios.id ? this.update(estudios) : this.add(estudios);
+  }
   
-    save(estudios: Estudios){
-      estudios.id ? this.update(estudios) : this.add(estudios);
-    }
-  
-    remove(estudios: Estudios){
-      this.estudiosList = this.estudiosList.filter(f => f.id !== estudios.id);
-    }
-  
+  remove(estudios: Estudios){
+    return this.http.delete<Estudios>(this.API_URL+estudios.id);
+  }
+
 }

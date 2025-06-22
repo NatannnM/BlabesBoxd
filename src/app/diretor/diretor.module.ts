@@ -11,6 +11,7 @@ import { DiretorFormComponent } from './diretor-form/diretor-form.component';
 import { DiretorDetailsComponent } from './diretor-details/diretor-details.component';
 
 import { MaskitoDirective } from '@maskito/angular';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -20,7 +21,8 @@ import { MaskitoDirective } from '@maskito/angular';
     DiretorPageRoutingModule,
     MaskitoDirective,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   declarations: [
     DiretorPage, 

@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar color="secondary">
     <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
+      <ion-back-button defaultHref="/diretor"></ion-back-button>
     </ion-buttons>
     <ion-title>Cadastro de Diretor!</ion-title>
   </ion-toolbar>
@@ -50,7 +50,7 @@
         </p>
       </ion-item>
       <ion-item>
-        <ion-input formControlName="launchDate" labelPlacement="floating" label="Data de Nascimento"
+        <ion-input formControlName="birthDate" labelPlacement="floating" label="Data de Nascimento"
           [maskito]="dateMask" [maskitoElement]="maskitoElement"></ion-input>
       </ion-item>
     </ion-list>
