@@ -1,5 +1,5 @@
 export type Usuarios = {
-    id?: number,
+    id?: string,
     name: string,
     nickname: string,
     photo: string,

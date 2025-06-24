@@ -9,6 +9,7 @@ import { FilmesPageRoutingModule } from './filmes-routing.module';
 import { FilmesPage } from './filmes.page';
 import { FilmesFormComponent } from './filmes-form/filmes-form.component';
 import { MaskitoDirective } from '@maskito/angular';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { MaskitoDirective } from '@maskito/angular';
     FilmesPageRoutingModule,
     MaskitoDirective,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   declarations: [
     FilmesPage,

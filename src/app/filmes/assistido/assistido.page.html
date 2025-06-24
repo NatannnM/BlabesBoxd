@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Avaliar Filme</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+
+  <ion-item>
+    <ion-label position="stacked">Nota</ion-label>
+    <ion-select [(ngModel)]="nota" placeholder="Selecione a nota">
+      <ion-select-option *ngFor="let n of notas" [value]="n">
+        {{ n }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Comentário</ion-label>
+    <ion-textarea [(ngModel)]="review"></ion-textarea>
+  </ion-item>
+
+  <ion-button expand="full" (click)="avaliar()">Enviar Avaliação</ion-button>
+
+</ion-content>

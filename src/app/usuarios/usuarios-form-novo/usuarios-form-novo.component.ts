@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertController, MenuController, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
+import { AlertController, MenuController, ToastController, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { ApplicationValidators } from 'src/app/core/validators/url.validator';
 import { UsuariosService } from '../services/usuarios.service';
 import { formatPhoneMask, maskitoElement, phoneMask } from 'src/app/core/constants/mask.constants';
@@ -25,7 +25,7 @@ export class UsuariosFormNovoComponent  implements OnInit, ViewWillEnter, ViewWi
     address: new FormControl('',[Validators.required, Validators.maxLength(200)]),
     password: new FormControl('',[Validators.required, Validators.minLength(8)]),
     phone: new FormControl(''),
-    admin: new FormControl([false])
+    admin: new FormControl(false)
   });
 
   usuariosId!: number;
@@ -36,18 +36,8 @@ export class UsuariosFormNovoComponent  implements OnInit, ViewWillEnter, ViewWi
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
-  ) { 
-    const usuariosId = parseInt(this.activatedRoute.snapshot.params['usuariosId']);
-    if (usuariosId) {
-      const usuarios = this.usuariosService.getById(usuariosId);
-      if (usuarios) {
-        this.usuariosId = usuariosId;
-        if (usuarios.phone) {
-          usuarios.phone = formatPhoneMask(usuarios.phone);
-        }
-        this.usuariosFormNovo.patchValue(usuarios);
-      }
-  }}
+    private toastController: ToastController
+  ) {}
   
   ionViewWillEnter(): void {
     this.menuControl.enable(false);
@@ -68,13 +58,29 @@ export class UsuariosFormNovoComponent  implements OnInit, ViewWillEnter, ViewWi
     this.usuariosService.save({
       ...value,
       id: this.usuariosId
+    }).subscribe({
+      next: () => {
+        this.toastController.create({
+          message: 'Usuário criado com sucesso!',
+          duration: 3000,
+          color: 'success',
+          position: 'top'
+        }).then(toast => toast.present());
+        this.router.navigate(['/filmes']);
+      },
+      error: (error) => {
+        this.toastController.create({
+          message: error.error.message,
+          header: 'Erro ao criar usuário ' + value.name + '!',
+          color: 'danger',
+          position: 'top',
+          buttons: [
+            { text: 'X', role: 'cancel' }
+          ]
+        }).then(toast => toast.present())
+        console.error(error);
+      }
     });
-    this.alertController.create({
-        header: 'Cadastro',
-        message: 'Cadastro feito com sucesso! Clique em ok.',
-        buttons: ['OK'],
-      }).then(alert => alert.present());
-    this.router.navigate(['/login']);
   }
 
 }

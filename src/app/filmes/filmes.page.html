@@ -33,11 +33,15 @@
             
           </ion-label>
         </ion-item>
-        <ion-button size="small" [routerLink]="['edit', filmes.id]">
+        <ion-button size="small" (click)="assistido(filmes)">
+          <ion-icon name="create" slot="start" ></ion-icon>
+          Assistido
+        </ion-button>
+        <ion-button *ngIf="usuariosAtual?.admin" size="small" [routerLink]="['edit', filmes.id]">
           <ion-icon name="create" slot="start" ></ion-icon>
           Editar
         </ion-button>
-        <ion-button size="small" (click)="remove(filmes)">
+        <ion-button *ngIf="usuariosAtual?.admin" size="small" (click)="remove(filmes)">
           <ion-icon name="trash" slot="end"></ion-icon>
           Excluir
         </ion-button>
