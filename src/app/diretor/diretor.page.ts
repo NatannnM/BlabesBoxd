@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Diretor } from './models/diretor.type';
 import { AlertController, ToastController, ViewDidEnter, ViewDidLeave, ViewWillEnter, ViewWillLeave } from '@ionic/angular';
 import { DiretorService } from './services/diretor.service';
+import { AuthService } from '../login/services/auth.service';
+import { UsuariosService } from '../usuarios/services/usuarios.service';
+import { Usuarios } from '../usuarios/models/usuarios.type';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-diretor',
@@ -10,16 +14,32 @@ import { DiretorService } from './services/diretor.service';
   standalone: false
 })
 export class DiretorPage implements OnInit, ViewWillEnter  {
-
+  usuariosAtual: Usuarios | undefined;
   diretorList: Diretor[] = []; 
 
   constructor(
-    private diretorService: DiretorService, 
+    private diretorService: DiretorService,
+    private authService: AuthService,
+    private usuariosService: UsuariosService,  
     private alertController: AlertController,
     private toastController: ToastController
   ) { }
 
+  async carregarDadosUsuario() {
+    try {
+      const usuarioId = await this.authService.getUsuarioId();
+        if (!usuarioId) {
+          return;
+        }
+      this.usuariosAtual = await firstValueFrom(this.usuariosService.getById(usuarioId));
+            
+    } catch(err){
+      console.error('Erro ao carregar usuário:', err);
+    }
+  }
+
   ionViewWillEnter(): void {
+    this.carregarDadosUsuario();
     this.diretorService.getList().subscribe({
       next: (response) => {
         this.diretorList = response;

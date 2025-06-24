@@ -26,11 +26,12 @@
           </ion-thumbnail>
           <ion-label>{{estudios.nome}}</ion-label>
         </ion-item>
-        <ion-button size="small" [routerLink]="['edit', estudios.id]">
-          <ion-icon name="create" slot="start"></ion-icon>
+        
+        <ion-button *ngIf="usuariosAtual?.admin" size="small" [routerLink]="['edit', estudios.id]">
+          <ion-icon name="create" slot="start" ></ion-icon>
           Editar
         </ion-button>
-        <ion-button size="small" (click)="remove(estudios)">
+        <ion-button *ngIf="usuariosAtual?.admin" size="small" (click)="remove(estudios)">
           <ion-icon name="trash" slot="end"></ion-icon>
           Excluir
         </ion-button>

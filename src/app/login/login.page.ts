@@ -26,9 +26,9 @@ export class LoginPage implements OnInit {
   ) { }
 
   async logar() {
-    let { value } = this.loginForm;
-    const id = await this.auth.login(value.email, value.password);
-    if(id){
+    const { value } = this.loginForm;
+    const user = await this.auth.login(value.email, value.password);
+    if(user){
       this.router.navigate(['../filmes']);
     } else {
       this.alertController.create({

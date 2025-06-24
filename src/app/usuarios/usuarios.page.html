@@ -23,6 +23,17 @@
           <p><strong>Administrador:</strong> {{ usuariosAtual.admin ? 'Sim' : 'Não' }}</p>
         </div>
       </div>
+      <ion-list>
+      @for(filme of usuariosFilmesList; track filme.filmesId) {
+        <ion-item>
+          <ion-label>
+            <h3>{{ filme.filmesId}}</h3>
+            <p>Nota: {{ filme.nota }}/10</p>
+            <p *ngIf="filme.review">Review: "{{ filme.review }}"</p>
+          </ion-label>
+        </ion-item>
+      }
+    </ion-list>
       <ion-button size="small" [routerLink]="['edit', usuariosAtual.id]">
         <ion-icon name="create" slot="start" ></ion-icon>
           Editar

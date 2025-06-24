@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Filmes } from './models/filmes.type';
 import { FilmesService } from './services/filmes.service';
 import { AlertController, ToastController, ViewWillEnter} from '@ionic/angular';
+import { Usuarios } from '../usuarios/models/usuarios.type';
+import { AuthService } from '../login/services/auth.service';
+import { UsuariosService } from '../usuarios/services/usuarios.service';
+import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-filmes',
@@ -11,16 +16,33 @@ import { AlertController, ToastController, ViewWillEnter} from '@ionic/angular';
 })
 
 export class FilmesPage implements OnInit, ViewWillEnter {
-  
+  usuariosAtual: Usuarios | undefined;
   filmesList: Filmes[] = [];
 
   constructor(
     private filmesService: FilmesService, 
+    private authService: AuthService,
+    private router: Router,
+    private usuariosService: UsuariosService,
     private alertController: AlertController,
     private toastController: ToastController
   ) {}
 
+  async carregarDadosUsuario() {
+    try {
+      const usuarioId = await this.authService.getUsuarioId();
+        if (!usuarioId) {
+          return;
+        }
+      this.usuariosAtual = await firstValueFrom(this.usuariosService.getById(usuarioId));
+        
+    } catch(err){
+      console.error('Erro ao carregar usuário:', err);
+    }
+  }
+
   ionViewWillEnter(): void {
+    this.carregarDadosUsuario();
     this.filmesService.getList().subscribe({
       next: (response) => {
         this.filmesList = response;
@@ -34,6 +56,10 @@ export class FilmesPage implements OnInit, ViewWillEnter {
   }
 
   ngOnInit() {}
+
+  assistido(filmes: Filmes) {
+    this.router.navigate(['/filmes', 'assistido', filmes.id]);
+  }
 
   remove(filmes: Filmes) {
     this.alertController.create({

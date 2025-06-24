@@ -1,73 +1,37 @@
 import { Injectable } from "@angular/core";
 import { Usuarios } from "../models/usuarios.type";
+import { HttpClient } from "@angular/common/http";
 
 @Injectable({
     providedIn: 'root'
 })
 export class UsuariosService{
 
-    private usuariosList: Usuarios[] = [
-        {
-            id: 1,
-            name: 'Manoel Gomes',
-            nickname: 'Caneta Azul',
-            photo: 'https://agoralaguna.com.br/wp-content/uploads/2024/01/manoel-gomes.jpg',
-            email: 'manoel@gmail.com',
-            address: 'Rua Joaquim Nabuco',
-            password: '12345678',
-            phone: '48996658439',
-            admin: true
-        },
-        {
-            id: 2,
-            name: 'Francisco',
-            nickname: 'Chico Moedas',
-            photo: 'https://www.alagoas24horas.com.br/wp-content/uploads/2025/01/Chico-Moedas.jpeg',
-            email: 'chico@gmail.com',
-            address: 'Rua Melvin Jones',
-            password: '87654321',
-            phone: '48995587421',
-            admin: false
-        }
-    ]
+  private readonly API_URL = 'http://localhost:3000/usuarios/';
 
-    getById(usuariosId: number){
-        return this.usuariosList.find(f => f.id === usuariosId);
-    }
+  constructor(private http: HttpClient){}
 
-    getList(){
-        return [...this.usuariosList];
-    }
+  getById(usuariosId: string){
+      return this.http.get<Usuarios>(`${this.API_URL}${usuariosId}`);
+     }
+    
+  getList(){
+    return this.http.get<Usuarios[]>(this.API_URL);
+  }
   
-    private add(usuarios: Usuarios){
-      this.usuariosList = [...this.usuariosList, {
-        ...usuarios,
-        id: this.getNextId()
-      }];
-    }
-    
-    private getNextId(): number {
-        const maxId = this.usuariosList.reduce((id, usuarios) => {
-            if (!!usuarios.id && usuarios?.id > id) {
-                id = usuarios.id;
-            }
-            return id;
-        }, 0);
-    return maxId + 1;
-    }
-    
-    save(usuarios: Usuarios){
-      usuarios.id? this.update(usuarios) : this.add(usuarios);
-    }
-    
-    private update(updatedUsuarios: Usuarios){
-      this.usuariosList = this.usuariosList.map(u =>{ return (u.id === updatedUsuarios.id) ? updatedUsuarios : u });
-    }
-    
-    remove(usuarios: Usuarios){
-      this.usuariosList = this.usuariosList.filter(u => u.id !== usuarios.id);
-    }  
-
-    
-
+  private add(usuarios: Usuarios){
+    return this.http.post<Usuarios>(this.API_URL, usuarios);
+  }
+  
+  private update(usuarios: Usuarios) {
+    return this.http.put<Usuarios>(`${this.API_URL}${usuarios.id}`, usuarios);
+  }
+  
+  save(usuarios: Usuarios){
+    return usuarios.id ? this.update(usuarios) : this.add(usuarios);
+  }
+  
+  remove(usuarios: Usuarios){
+    return this.http.delete<Usuarios>(this.API_URL+usuarios.id);
+  }
 }

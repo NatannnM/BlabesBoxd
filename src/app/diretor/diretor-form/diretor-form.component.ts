@@ -23,7 +23,7 @@ export class DiretorFormComponent  implements OnInit {
     sobre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(300)]),
     birthDate: new FormControl('', Validators.required),
   });
-  diretorId!: number;
+  diretorId!: string;
 
   constructor(
     private diretorService: DiretorService, 

@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { FilmesPage } from './filmes.page';
 import { FilmesFormComponent } from './filmes-form/filmes-form.component';
 import { FilmesDetailsComponent } from './filmes-details/filmes-details.component';
+import { AssistidoPage } from './assistido/assistido.page';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
     path: 'edit/:filmesId',
     component: FilmesFormComponent
   },
+  {
+    path: 'assistido/:filmesId',
+    component: AssistidoPage
+  },
+
   {
     path: ':filmesId',
     component: FilmesDetailsComponent

@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/filmes"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Detalhes do Filme</ion-title>
+    <ion-buttons slot="end">
+      <ion-button [routerLink]="['edit', filmes.id]">
+        <ion-icon name="create-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="deleteFilme()" color="danger">
+        <ion-icon name="trash-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <ion-card *ngIf="filmes">
+    <ion-card-header>
+      <div class="movie-header">
+        <img [src]="filmes.image" [alt]="filmes.title" class="movie-poster">
+        <div class="movie-title-info">
+          <ion-card-title>{{ filmes.title }}</ion-card-title>
+          <ion-card-subtitle>
+            Lançamento: {{filmes.launchDate | date: 'dd/MM/yyyy' }}
+          </ion-card-subtitle>
+        </div>
+      </div>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>
+            <h2>Gêneros</h2>
+            <ul>
+            @for(generos of filmes.genre; track generos) {
+              <li>{{generos.nome}}</li>
+            }
+            </ul>
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h2>Diretor</h2>
+            @for(diretor of filmes.director; track diretor){
+              <p>{{ diretor?.nome }}</p>
+              <p class="info-text">{{ diretor?.sobre }}</p>
+              <p class="info-text">Nascimento: {{diretor?.birthDate | date: 'dd/MM/yyyy' }}</p>
+            }  
+          </ion-label>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>
+            <h2>Estúdio</h2>
+            @for(estudio of filmes.estudios; track estudio){
+              <p>{{ estudio?.nome }}</p>
+              <p class="info-text">{{ estudio?.sobre }}</p>
+              <p class="info-text">Fundação: {{estudio?.launchDate | date: 'dd/MM/yyyy' }}</p>
+            }
+          </ion-label>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content> 
